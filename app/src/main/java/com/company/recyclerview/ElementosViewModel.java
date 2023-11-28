@@ -14,6 +14,8 @@ public class ElementosViewModel extends AndroidViewModel {
 
     MutableLiveData<List<Elemento>> listElementosMutableLiveData = new MutableLiveData<>();
 
+    MutableLiveData<Elemento> elementoSeleccionado = new MutableLiveData<>();
+
     public ElementosViewModel(@NonNull Application application) {
         super(application);
 
@@ -26,24 +28,6 @@ public class ElementosViewModel extends AndroidViewModel {
         return listElementosMutableLiveData;
     }
 
-    void insertar(Elemento elemento){
-        elementosRepositorio.insertar(elemento, new ElementosRepositorio.Callback() {
-            @Override
-            public void cuandoFinalice(List<Elemento> elementos) {
-                listElementosMutableLiveData.setValue(elementos);
-            }
-        });
-    }
-
-    void eliminar(Elemento elemento){
-        elementosRepositorio.eliminar(elemento, new ElementosRepositorio.Callback() {
-            @Override
-            public void cuandoFinalice(List<Elemento> elementos) {
-                listElementosMutableLiveData.setValue(elementos);
-            }
-        });
-    }
-
     void actualizar(Elemento elemento, float valoracion){
         elementosRepositorio.actualizar(elemento, valoracion, new ElementosRepositorio.Callback() {
             @Override
@@ -51,5 +35,12 @@ public class ElementosViewModel extends AndroidViewModel {
                 listElementosMutableLiveData.setValue(elementos);
             }
         });
+    }
+    void seleccionar(Elemento elemento){
+        elementoSeleccionado.setValue(elemento);
+    }
+
+    MutableLiveData<Elemento> seleccionado(){
+        return elementoSeleccionado;
     }
 }
